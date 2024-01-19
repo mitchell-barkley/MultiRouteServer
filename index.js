@@ -4,26 +4,23 @@ global.DEBUG = true;
 
 const server = http.createServer((request, response) => {
     if(DEBUG) console.log('Request URL', request.url);
+    let filename = 'index.html';
     switch (request.url) {
         case '/':
-            if(DEBUG) console.log('Root Route')
-            response.writeHead(200, { 'Content-Type': 'text/html' });
-            response.end(fs.readFileSync('<h1>Welcome to the Home Page!</h1>'));
-            break;
         case '/home':
-            if(DEBUG) console.log('Home Route')
-            response.writeHead(200, { 'Content-Type': 'text/html' });
-            response.end('<h1>Welcome to the Home Page!</h1>');
+            if(DEBUG) console.log('Root Route')
+            filename = './index.html';
+            fetchFile(filename)
             break;
         case '/about':
             if(DEBUG) console.log('About Route')
-            response.writeHead(200, { 'Content-Type': 'text/html' });
-            response.end('<h1>About Me</h1>');
+            filename = './about.html';
+            fetchFile(filename)
             break;
         case '/contact':
             if(DEBUG) console.log('Contact Route')
-            response.writeHead(200, { 'Content-Type': 'text/html' });
-            response.end('<h1>Contact Me</h1>');
+            filename = './contact.html';
+            fetchFile(filename)
             break;
         default:
             if(DEBUG) console.log('404 Route')
@@ -31,7 +28,17 @@ const server = http.createServer((request, response) => {
             response.end('<h1>404 Page Not Found</h1>');
             break;
     }
-
+    function fetchFile(fileName) {
+        fs.readFile(fileName, (error, content) => {
+            if (error) {
+                response.writeHead(500, { 'Content-Type': 'text/html' });
+                response.end('<h1>500 Internal Server Error</h1>');
+            } else {
+                response.writeHead(200, { 'Content-Type': 'text/html' });
+                response.end(content, 'utf-8');
+            }
+        });
+    }
 });
 
 server.listen(3000, () => {
