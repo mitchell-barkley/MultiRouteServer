@@ -4,23 +4,26 @@ global.DEBUG = true;
 
 const server = http.createServer((request, response) => {
     if(DEBUG) console.log('Request URL', request.url);
-    let filename = 'index.html';
+    let path = './views/';
     switch (request.url) {
         case '/':
         case '/home':
             if(DEBUG) console.log('Root Route')
-            filename = './index.html';
-            fetchFile(filename)
+            path += './index.html';
+            if(DEBUG) console.log('Path', path);
+            fetchFile(path)
             break;
         case '/about':
             if(DEBUG) console.log('About Route')
-            filename = './about.html';
-            fetchFile(filename)
+            path += './about.html';
+            if(DEBUG) console.log('Path', path);
+            fetchFile(path)
             break;
         case '/contact':
             if(DEBUG) console.log('Contact Route')
-            filename = './contact.html';
-            fetchFile(filename)
+            path += './contact.html';
+            if(DEBUG) console.log('Path', path);
+            fetchFile(path)
             break;
         default:
             if(DEBUG) console.log('404 Route')
