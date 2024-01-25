@@ -8,5 +8,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "date-fns": "^3.3.1",
+    "uuid": "^9.0.1",
+    "node": "^21.6.0"
+  }
 }
